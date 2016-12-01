@@ -13,6 +13,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
+
 /**
  * ProductoController implements the CRUD actions for Producto model.
  */
@@ -87,12 +88,14 @@ class ProductoController extends Controller {
      * @return mixed
      */
     public function actionReporte() {
+        $persona = Persona::find()->where(['nombreP' => Yii::$app->user->identity->id])->one();
         $dataProvider = new ActiveDataProvider([
-            'query' => Registro::find(['uid' => Yii::$app->user->identity->id])->select([new Expression('SUM(cantidad) as cantidad'), 'idP'])->groupBy('idP'),
+            'query' => Registro::find()->where(['uid' => Yii::$app->user->identity->id])->select([new Expression('SUM(cantidad) as cantidad'), 'idP'])->groupBy('idP'),
         ]);
 
         return $this->render('reporte', [
                     'dataProvider' => $dataProvider,
+                    'persona' => $persona
         ]);
     }
 
@@ -111,7 +114,7 @@ class ProductoController extends Controller {
             $modelRegistro->uid = Yii::$app->user->identity->id;
             if ($modelRegistro->save()) {
                 $producto = Producto::find()->where(['idP' => $modelRegistro->idP])->one();
-                $s = Persona::find(['nombreP' => $modelRegistro->uid])->one();
+                $s = Persona::find()->where(['nombreP' => $modelRegistro->uid])->one();
                 $saldo = $s->saldo + ($producto->precio * $modelRegistro->cantidad);
 
                 Yii::$app->db->createCommand()->update('persona', ['saldo' => $saldo], 'nombreP =' . $modelRegistro->uid)->execute();

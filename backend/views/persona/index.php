@@ -25,12 +25,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'uid',
-            'idD',
-            'nombreP',
-            'saldo',
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]);
-    ?>
+            //'uid',
+            //'idD',
+            [
+                'attribute' => 'idD',
+                'label' => 'Departamento',
+                'value' => function($data) {
+                    $dato = common\models\Departamento::find()->where(['idD' => $data['idD']])->one();
+                    return $dato->nombreD;
+                }
+                    ],
+                    //'nombreP',
+                            [
+                'attribute' => 'nombreP',
+                'label' => 'Persona',
+                'value' => function($data) {
+                    $dato = common\models\User::find()->where(['id' => $data['nombreP']])->one();
+                    return $dato->username;
+                }
+                    ],
+                    'saldo',
+                    ['class' => 'yii\grid\ActionColumn'],
+                ],
+            ]);
+            ?>
 </div>

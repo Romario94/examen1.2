@@ -12,20 +12,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="producto-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1><b><h2>TOTAL DE DEUDA: $ <?=$persona->saldo?></b></h2>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('Comprar Producto', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <div class="row">
-        <div class="pull-left">
-            
-        </div>
-        <div class="pull-right">
-            <b><h2>TOTAL</h2></b>
-        </div>
-    </div>
     <?=
     GridView::widget([
         'dataProvider' => $dataProvider,

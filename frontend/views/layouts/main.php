@@ -37,7 +37,7 @@ AppAsset::register($this);
             $menuItems = [
                 ['label' => 'Inicio', 'url' => ['/site/index']],
                 
-                ['label' => 'Reporte consumo', 'url' => ['post'], 'visible' => !Yii::$app->user->isGuest],
+                ['label' => 'Reporte consumo', 'url' => ['producto/reporte'], 'visible' => !Yii::$app->user->isGuest],
                 ['label' => 'Comprar', 'url' => ['/producto/create'] , 'visible' => !Yii::$app->user->isGuest],
             ];
             if (Yii::$app->user->isGuest) {

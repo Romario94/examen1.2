@@ -8,7 +8,7 @@ use frontend\models\RegistroSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\filters\AccessControl;
 /**
  * RegistroController implements the CRUD actions for Registro model.
  */

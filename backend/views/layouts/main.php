@@ -45,6 +45,14 @@ AppAsset::register($this);
                         ['label' => 'Productos', 'url' => ['producto/index']],
                         ['label' => 'Personas', 'url' => ['persona/index']],
                         ['label' => 'Departamento', 'url' => ['departamento/index']],
+                        ['label' => 'Reporte', 'url' => ['producto/reporte']],
+                        '<li class="divider"></li>',
+                        '<li class="dropdown-header"></li>',
+                         ['label' => 'Usuarios', 'url' => ['user/admin']],
+                        '<li class="divider"></li>',
+                        '<li class="dropdown-header">Servicios Web</li>',
+                         ['label' => 'Pedidos', 'url' => ['api-pedidos/']],
+                        ['label' => 'Productos', 'url' => ['api-productos/']],
                     ],
                 ];
                 $menuItems[] = '<li>'
@@ -63,11 +71,11 @@ AppAsset::register($this);
             ?>
 
             <div class="container">
-<?=
-Breadcrumbs::widget([
-    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-])
-?>
+                <?=
+                Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ])
+                ?>
                 <?= Alert::widget() ?>
                 <?= $content ?>
             </div>
