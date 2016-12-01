@@ -10,6 +10,7 @@ use Yii;
  * @property integer $idR
  * @property integer $uid
  * @property integer $idP
+ * @property integer $cantidad
  *
  * @property Persona $u
  * @property Producto $idP0
@@ -30,9 +31,9 @@ class Registro extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uid', 'idP'], 'required'],
-            [['uid', 'idP'], 'integer'],
-            [['uid'], 'exist', 'skipOnError' => true, 'targetClass' => Persona::className(), 'targetAttribute' => ['uid' => 'uid']],
+            [['idP', 'cantidad'], 'required'],
+            [['uid', 'idP', 'cantidad'], 'integer'],
+            [['uid'], 'exist', 'skipOnError' => true, 'targetClass' => Persona::className(), 'targetAttribute' => ['uid' => 'nombreP']],
             [['idP'], 'exist', 'skipOnError' => true, 'targetClass' => Producto::className(), 'targetAttribute' => ['idP' => 'idP']],
         ];
     }
@@ -46,6 +47,7 @@ class Registro extends \yii\db\ActiveRecord
             'idR' => 'Id R',
             'uid' => 'Uid',
             'idP' => 'Id P',
+            'cantidad' => 'Cantidad',
         ];
     }
 
@@ -64,4 +66,10 @@ class Registro extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Producto::className(), ['idP' => 'idP']);
     }
+    public function getComboProductos() {
+        $model = Producto::find()->asArray()->all();
+
+        return \yii\helpers\ArrayHelper::map($model, 'idP', 'nombreP');
+    }
+
 }

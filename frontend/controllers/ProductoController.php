@@ -4,11 +4,12 @@ namespace frontend\controllers;
 
 use Yii;
 use common\models\Producto;
+use \common\models\Registro;
 use frontend\models\ProductoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\filters\AccessControl;
 /**
  * ProductoController implements the CRUD actions for Producto model.
  */
@@ -24,6 +25,30 @@ class ProductoController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'update', 'view', 'delete'],
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                    [
+                        'actions' => ['logout', 'update', 'view', 'delete'],
+                        'allow' => true,
+                        'roles' => ['user'],
+                    ],
+                     [
+                        'actions' => ['create', !'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],                   
                 ],
             ],
         ];
@@ -63,13 +88,18 @@ class ProductoController extends Controller
      */
     public function actionCreate()
     {
+        $modelRegistro = new Registro();
         $model = new Producto();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idP]);
+        if ($modelRegistro->load(Yii::$app->request->post())) {
+             $modelRegistro->uid=Yii::$app->user->identity->id;
+             
+            if($modelRegistro->save()){
+                return $this->redirect(['view', 'id' => $modelRegistro->idP]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'modelRegistro' => $modelRegistro,
             ]);
         }
     }

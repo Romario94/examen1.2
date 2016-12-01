@@ -47,7 +47,6 @@ return [
     'modules' => [
         'user' => [
             'class' => 'dektrium\user\Module',
-            'class' => 'dektrium\user\Module',
             'enableUnconfirmedLogin' => true,
             'confirmWithin' => 21600,
             'cost' => 12,

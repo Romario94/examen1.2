@@ -16,26 +16,24 @@ use Yii;
  * @property Persona $u
  * @property Registro[] $registros
  */
-class Producto extends \yii\db\ActiveRecord
-{
+class Producto extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'producto';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['nombreP', 'precio', 'uid', 'cantidadC'], 'required'],
+            [['nombreP'], 'required'],
             [['nombreP'], 'string'],
             [['precio'], 'number'],
-            [['uid', 'cantidadC'], 'integer'],
+            [['uid'], 'integer'],
             [['uid'], 'exist', 'skipOnError' => true, 'targetClass' => Persona::className(), 'targetAttribute' => ['uid' => 'uid']],
         ];
     }
@@ -43,30 +41,33 @@ class Producto extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'idP' => 'Id P',
             'nombreP' => 'Nombre P',
             'precio' => 'Precio',
             'uid' => 'Uid',
-            'cantidadC' => 'Cantidad C',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getU()
-    {
+    public function getU() {
         return $this->hasOne(Persona::className(), ['uid' => 'uid']);
+    }
+
+    public function getComboProductos() {
+        $model = Producto::find()->asArray()->all();
+
+        return \yii\helpers\ArrayHelper::map($model, 'idP', 'nombreP');
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRegistros()
-    {
+    public function getRegistros() {
         return $this->hasMany(Registro::className(), ['idP' => 'idP']);
     }
+
 }

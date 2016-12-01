@@ -210,4 +210,31 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+     public function actionConsumo(){
+        
+        if(!Yii::$app->user->isGuest){
+       $query= \common\models\Producto::find()->where(['uid'=>Yii::$app->user->identity->id]);
+       
+       //$query = Noticia::find();
+        $pagination = new \yii\data\Pagination([
+            'defaultPageSize'   => 4,
+            'totalCount'        => $query->count(),
+        ]);
+        $productos = $query->orderBy('id desc')
+                    ->offset($pagination->offset)
+                    ->limit($pagination->limit)
+                    ->all();
+        
+        return $this->render(
+            'post',
+            [
+                'pagination'    => $pagination,
+                'productos'      => $productos,
+            ]
+        );              
+        }else{
+           $this->redirect(['error']);
+        }
+
+    }
 }
