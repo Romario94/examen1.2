@@ -17,19 +17,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Create Persona', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Reset Saldo', ['reset'], ['class' => 'btn btn-warning']) ?>
     </p>
-    <?= GridView::widget([
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'uid',
             'idD',
             'nombreP',
             'saldo',
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+    ]);
+    ?>
 </div>

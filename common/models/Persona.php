@@ -34,7 +34,7 @@ class Persona extends \yii\db\ActiveRecord
         return [
             [['idD', 'nombreP'], 'required'],
             [['idD'], 'integer'],
-            [['saldo'], 'number'],
+            [['saldo'], 'double'],
             [['nombreP'], 'string', 'max' => 50],
             [['idD'], 'exist', 'skipOnError' => true, 'targetClass' => Departamento::className(), 'targetAttribute' => ['idD' => 'idD']],
         ];

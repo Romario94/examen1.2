@@ -32,7 +32,7 @@ class Producto extends \yii\db\ActiveRecord {
         return [
             [['nombreP'], 'required'],
             [['nombreP'], 'string'],
-            [['precio'], 'number'],
+            [['precio'], 'double'],
             [['uid'], 'integer'],
             [['uid'], 'exist', 'skipOnError' => true, 'targetClass' => Persona::className(), 'targetAttribute' => ['uid' => 'uid']],
         ];
